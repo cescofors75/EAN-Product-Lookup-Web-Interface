@@ -1,8 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.RazorPages;
+﻿using Microsoft.AspNetCore.Mvc.RazorPages;
 using MySql.Data.MySqlClient;
 using Newtonsoft.Json.Linq;
-using System.Web;
 
 
 
@@ -34,25 +32,9 @@ public class IndexModel : PageModel
     public  void  OnPost(string reference2)   //IActionResult
 
     {
-     //SearchEan(reference2);
-  /*   var task2 = new Task(() => {
-    Message3="Buscando...";
-
-    });
-    task2.Start();
-     await task2;*/
-
-
+    
       SearchEan(reference2);
-     
-  
-
-    //SearchEan(reference2);
-     
-     //SearchEan(reference2);
-    //SearchStores("837290004230", 0);
-    //Message2="ok3";
-       
+        
     }
 
 
@@ -85,7 +67,6 @@ public  void SearchEan(string reference2){
             reference = new Reference();
             while (reader.Read())
             {
-               // reference.refe=await reader.GetFieldValueAsync<string>(0);
                 reference.refe =  reader.GetString(0);   
                 reference.description = reader.GetString(1);
                 reference.price = float. Parse(reader.GetString(2));
@@ -102,23 +83,7 @@ public  void SearchEan(string reference2){
                     task.Wait();
                     Message2 = task.Result;
 
-                  //  string MessageA = task;
-
-            
-              
-              // Message2="okpretask2";  
-
-                 //Console.ReadLine();
-               
-                // Message2="okposttask";
-               //  Task.Run (()=>SearchStores(reference.ean, f1));
-
-                //GetCodes(reader.GetString(4), f1);
-               // label3.Text = reader.GetString(0)+" - " + reader.GetString(1) + " - " + reader.GetString(2)+ " €" ;
-               // reference3 = new Reference(reader.GetString(0), reader.GetString(1), reader.GetString(2), reader.GetString(3), reader.GetString(4));
-               // reference.description= reader.GetString(1);
-               // reference.price= reader.GetString(2);
-               // reference.legacy= reader.GetString(3);
+                 
 
 
                
@@ -148,7 +113,7 @@ public  void SearchEan(string reference2){
 public  async Task <string> SearchStores(string ean, float price){
 
  //string ean=textBox1.Text;
- string Message3="";
+ //string Message3="";
 
         string api_key = "l1sb4dr7rnng4ftxp41smz54soubg2";
             //Define your baseUrl
@@ -194,7 +159,7 @@ public  async Task <string> SearchStores(string ean, float price){
                                  store.name = jToken2["name"].ToString();
                                     store.price = jToken2["price"].ToString();
                             //Message2+=("Information found in "+store.name+" in "+store.country+" for "+store.price+" €");
-                               Message3+=jToken2["name"].ToString()+" "+jToken2["country"].ToString()+" "+jToken2["price"].ToString()+" € </br>";
+                               Message2+=jToken2["name"].ToString()+" "+jToken2["country"].ToString()+" "+jToken2["price"].ToString()+" € </br>";
 
                              
                               }
@@ -217,7 +182,7 @@ public  async Task <string> SearchStores(string ean, float price){
 
         
        
-        Task<string> task = Task.FromResult(Message3);
+        Task<string> task = Task.FromResult(Message2);
         return task.Result;
 
 }
