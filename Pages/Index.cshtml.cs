@@ -4,6 +4,7 @@ using Newtonsoft.Json.Linq;
 
 
 
+
 namespace webpageC_.Pages;
 
 public class IndexModel : PageModel
@@ -13,27 +14,43 @@ public class IndexModel : PageModel
     //[BindProperty]
     public Reference reference { get; set; }
     public int state { get; set; }
-   
+    public bool spinning { get; set; }
     public string Message { get; set; }
     // [TempData]
     public string Message2 { get; set; }
-   
+     public string Message3 { get; set; }
     //[BindProperty]
     public Store store { get; set; }
+
+   
     public void OnGet()
     {
     
     }
-    public  void  OnPost(string reference2)   //IActionResult
-
-    {
+    public  void OnPost(string reference2)   //IActionResult
+     {
     
+    
+     
+     
+      
+       
+      Message3="search";
+        Message2="";
+      
+
+
       SearchEan(reference2);
-        
+
+    
+      
+
+      
     }
 
+   
 
-public  void SearchEan(string reference2){
+public   void   SearchEan(string reference2){
         
         
    
@@ -60,20 +77,25 @@ public  void SearchEan(string reference2){
         if (reader.HasRows)
         {
             reference = new Reference();
+           float f1=0;
+               // reference.ean = reader.GetString(4);
+            
+
+
             while (reader.Read())
             {
+               
+                f1 = float. Parse(reader.GetString(2));
                 reference.refe =  reader.GetString(0);   
                 reference.description = reader.GetString(1);
                 reference.price = float. Parse(reader.GetString(2));
                 reference.legacy = reader.GetString(3);
                 reference.ean = reader.GetString(4);
 
-
-
-                float f1 = float. Parse(reader.GetString(2));
+                // f1 = float. Parse(reader.GetString(2));
              
-            Message="REFERENCE: "+reference.refe+" "+"DESCRIPTION: "+reference.description+"\n"+"PRICE: "+f1+"€\n";
-            
+            //Message="REFERENCE: "+reference.refe+" "+"DESCRIPTION: "+reference.description+"\n"+"PRICE: "+f1+"€\n";
+                   
                     Task<string> task = SearchStores(reference.ean, f1);
                     task.Wait();
                     Message2 = task.Result;
@@ -83,6 +105,9 @@ public  void SearchEan(string reference2){
 
                
             }
+             Message="REFERENCE: "+reference.refe+" "+"DESCRIPTION: "+reference.description+"\n"+"PRICE: "+f1+"€\n";
+            //Message3="";
+
         }
         else
         {
@@ -139,31 +164,33 @@ public  async Task <string> SearchStores(string ean, float price){
                                
                                 //Now log your data object in the console
                               JToken jToken = JObject.Parse(data)["products"][0]["stores"];
-                              int length = jToken.Count();
+                            int length = jToken.Count();
                              
 
-                             store = new Store();
+                             /*store = new Store();
+                             var stores = new List<Store>();*/
                              
+
                               for (int i = 0; i < length; i++)
                               {
                                
                                  
                                
                                JToken jToken2 = JObject.Parse(data)["products"][0]["stores"][i];
-                               store.country = jToken2["country"].ToString();
-                                 store.name = jToken2["name"].ToString();
-                                    store.price = jToken2["price"].ToString();
+                              /* store.country = jToken2["country"].ToString();
+                               store.name = jToken2["name"].ToString();
+                               store.price = jToken2["price"].ToString();*/
                             //Message2+=("Information found in "+store.name+" in "+store.country+" for "+store.price+" €");
-                               Message2+=jToken2["name"].ToString()+" "+jToken2["country"].ToString()+" "+jToken2["price"].ToString()+" € </br>";
-
-                             
+                              Message2+=jToken2["name"].ToString()+" "+jToken2["country"].ToString()+" "+jToken2["price"].ToString()+" € </br>";
+                                
+                                
                               }
-                              //Console.WriteLine(Message2); 
                               
                             }
                             else
                             {
                                 Console.WriteLine("NO Data----------");
+                                Message2=("No se encontro nada");
                             }
                         }
                     }
