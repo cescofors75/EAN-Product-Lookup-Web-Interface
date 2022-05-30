@@ -1,9 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc.RazorPages;
 using MySql.Data.MySqlClient;
 using Newtonsoft.Json.Linq;
-
-
-
+using static webpageC_.Pages.IndexModel;
 
 namespace webpageC_.Pages;
 
@@ -29,22 +27,10 @@ public class IndexModel : PageModel
     }
     public  void OnPost(string reference2)   //IActionResult
      {
-    
-    
-     
-     
       
-       
       Message3="search";
-        Message2="";
-      
-
-
+      Message2="";
       SearchEan(reference2);
-
-    
-      
-
       
     }
 
@@ -105,7 +91,7 @@ public   void   SearchEan(string reference2){
 
                
             }
-             Message="REFERENCE: "+reference.refe+" "+"DESCRIPTION: "+reference.description+"\n"+"PRICE: "+f1+"€\n";
+             Message="<table><tr><td>REFERENCE: "+reference.refe+"</td></tr><tr><td>DESCRIPTION: "+reference.description+"</td></tr><tr><td>PRICE: "+f1+"€</td></tr></table>";
             //Message3="";
 
         }
@@ -162,29 +148,80 @@ public  async Task <string> SearchStores(string ean, float price){
                             if (content != null)
                             {
                                
-                                //Now log your data object in the console
-                              JToken jToken = JObject.Parse(data)["products"][0]["stores"];
-                            int length = jToken.Count();
-                             
+                                //Now log your data object in the con
+                            
+                               JToken jTokendes = JObject.Parse(data)["products"][0];
 
-                             /*store = new Store();
-                             var stores = new List<Store>();*/
-                             
+                            Message2 +="<table><tr><td><img src='"+jTokendes["images"][0].ToString()+"' width=150px ></td></tr>";
+                            Message2 +="<tr><td>Title: "+jTokendes["title"].ToString()+"</td></tr><tr><td>Brand: "+jTokendes["brand"].ToString()+"</td></tr><tr><td>Description: "+jTokendes["description"].ToString()+"</td></tr></table>";
+                               
+
+                            JToken jToken = JObject.Parse(data)["products"][0]["stores"];
+                            int length = jToken.Count();
+                            
+
+                             store = new Store();
+                        
+                              
+                               
+
+                            Message2+="<table>";
 
                               for (int i = 0; i < length; i++)
                               {
-                               
-                                 
-                               
                                JToken jToken2 = JObject.Parse(data)["products"][0]["stores"][i];
-                              /* store.country = jToken2["country"].ToString();
+                               store.country = jToken2["country"].ToString();
                                store.name = jToken2["name"].ToString();
-                               store.price = jToken2["price"].ToString();*/
-                            //Message2+=("Information found in "+store.name+" in "+store.country+" for "+store.price+" €");
-                              Message2+=jToken2["name"].ToString()+" "+jToken2["country"].ToString()+" "+jToken2["price"].ToString()+" € </br>";
-                                
+                               store.price = jToken2["price"].ToString();
+
+                               
+                        
+                              if (store.country.ToString()=="GB"){
+                                     float price_euro=float.Parse(store.price.Replace(".",","))*1.17f;
+                              
+                                    float dif=price_euro-price;
+                                     dif=(float)Math.Round(dif * 100f) / 100f;
+                                     if (dif>0){
+                                    Message2 +="<tr><td>"+store.country+"</td><td>"+store.name.ToString()+"</td><td style='padding:10px;color:green'>"+store.price.ToString()+"£</td><td style='padding:10px;color:green'>"+dif+"€</td></tr>";
+                                     }else{
+
+                                    Message2 +="<tr><td>"+store.country+"</td><td>"+store.name.ToString()+"</td><td style='padding:10px;color:red'>"+store.price.ToString()+"£</td><td style='padding:10px;color:red'>"+dif+"€</td></tr>";
+  
+                                     }
+                              }
+                              if (store.country.ToString()=="EU")                                 
+
+                                {
+                                    float price_euro=float.Parse(store.price.Replace(".",","))*1;
+                              
+                                    float dif=price_euro-price;
+                                    dif=(float)Math.Round(dif * 100f) / 100f;
+
+                                    if (dif>0){
+                                    Message2 +="<tr><td>"+store.country+"</td><td>"+store.name.ToString()+"</td><td style='padding:10px;color:green'>"+store.price.ToString()+"€</td><td style='padding:10px;color:green'>"+dif+"€</td></tr>"; 
+                                                              
+                                    }else{
+
+                                    Message2 +="<tr><td>"+store.country+"</td><td>"+store.name.ToString()+"</td><td style='padding:10px;color:red'>"+store.price.ToString()+"€</td><td style='padding:10px;color:red'>"+dif+"€</td></tr>"; 
+
+
+                                    }
+
+
+
+
+                                }                         
+                             
+                              
+                            
+
+                              
+                              //Message2+=jToken2["name"].ToString()+" "+jToken2["country"].ToString()+" "+jToken2["price"].ToString()+" € </br>";
+                               
                                 
                               }
+                                Message2+="</table>";
+                             //  Console.WriteLine(Message2);
                               
                             }
                             else
@@ -203,7 +240,7 @@ public  async Task <string> SearchStores(string ean, float price){
             }
 
         
-       
+      
         Task<string> task = Task.FromResult(Message2);
         return task.Result;
 

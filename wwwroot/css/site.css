@@ -30,5 +30,23 @@ body {
   
  #stores{
       
-    color: blue;  
+    color: rgb(70, 70, 71);  
+  }
+
+
+  tbody tr:nth-child(odd) {
+    /*background-color: hsl(220, 75%, 16%);
+    background-color: #545557;*/
+    background-color: rgb(240, 240, 220);
+    font-family: "Source Code Pro";
+      font-size: 16px;
+      text-align: left;
+  }
+  tbody tr:nth-child(even) {
+    /*background-color: hsl(220, 75%, 6%);
+    background-color: #444445;*/
+    background-color: rgb(240, 240, 250);
+    font-family: "Source Code Pro";
+      font-size: 16px;
+      text-align: left;
   }
