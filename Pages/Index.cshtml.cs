@@ -288,6 +288,8 @@ public  async Task <string> SearchStores(string ean, float price)
             {
                 //Console.WriteLine("Exception Hit------------");
                // Console.WriteLine(exception);
+                Console.WriteLine("NO Data----------");
+                                Message2=("Stores not found");
             }
 
         
