@@ -6,7 +6,7 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <RootNamespace>webpageC_</RootNamespace>
     <NoWarn>
-      8618;8602;8600
+      8618;8602;8600;8604
     </NoWarn>
   </PropertyGroup>
 
