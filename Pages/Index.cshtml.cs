@@ -103,7 +103,7 @@ public  void  SearchEan(string reference2){
         else
         {
             Console.WriteLine("No se encontro nada");
-            Message=("No se encontro nada");
+            Message=("Reference not found");
         }
 
         databaseConnection.Close();
@@ -180,19 +180,29 @@ public  async Task <string> SearchStores(string ean, float price)
 
 
                             store = new Store();
-                        
+                            
                               
                             Message2+="<table><tr> <th>Store</th><th>Price</th><th>Price€</th><th>Gap</th></tr>";
-                             
-                             int i=0;
-                              //for (int i = 0; i < length; i++)
-                             foreach (var item in jToken)
+                              ////////////////////////////////
+                            int i=0;
+                              foreach (var item in jToken)
                               {
                                JToken jToken2 = JObject.Parse(data)["products"][0]["stores"][i];
-                              i++;
+                              
                                store.country = jToken2["country"].ToString();
+
+                             
+                               
                                store.name = jToken2["name"].ToString();
                                store.price = jToken2["price"].ToString();
+                               
+                               i++;
+                              
+                              
+
+                            ///////////////////////////////////////
+                             
+                             
 
                                
                         
@@ -268,7 +278,7 @@ public  async Task <string> SearchStores(string ean, float price)
                             else
                             {
                                 Console.WriteLine("NO Data----------");
-                                Message2=("No se encontro nada");
+                                Message2=("Stores not found");
                             }
                         }
                     }
