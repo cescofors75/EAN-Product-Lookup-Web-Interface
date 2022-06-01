@@ -16,23 +16,27 @@ public class IndexModel : PageModel
     public string Message { get; set; }
     // [TempData]
     public string Message2 { get; set; }
-    
-    //[BindProperty]
+   
     public Store store { get; set; }
 
    
-    public void OnGet()
+    public void OnGet(string reference2)
     {
-    
+     
     }
-    public  void  OnPost(string reference2)   //IActionResult
+    public void OnPost(string reference2)   //IActionResult
      {
      
      
+
+
+  
       
-     Message="Search ....";  
+      
+     
      Message2="";
-      SearchEan(reference2);
+      
+        SearchEan(reference2);
       
     }
 
