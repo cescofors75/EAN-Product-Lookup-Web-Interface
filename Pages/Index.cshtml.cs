@@ -30,18 +30,15 @@ public class IndexModel : PageModel
      
      
       
-          
-      Message="";  
-      
-      Message2="";
-     
-     SearchEan(reference2);
+     Message="Search ....";  
+     Message2="";
+      SearchEan(reference2);
       
     }
 
    
 
-public  void  SearchEan(string reference2){
+public  void SearchEan(string reference2){
         
         
    
@@ -278,7 +275,7 @@ public  async Task <string> SearchStores(string ean, float price)
                             else
                             {
                                 Console.WriteLine("NO Data----------");
-                                Message2=("Stores not found");
+                                //Message2+=("Stores not found");
                             }
                         }
                     }
@@ -289,7 +286,7 @@ public  async Task <string> SearchStores(string ean, float price)
                 //Console.WriteLine("Exception Hit------------");
                // Console.WriteLine(exception);
                 Console.WriteLine("NO Data----------");
-                                Message2=("Stores not found");
+                //Message2+=("Stores not found*");
             }
 
         
