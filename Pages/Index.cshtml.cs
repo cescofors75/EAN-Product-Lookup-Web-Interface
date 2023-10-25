@@ -128,7 +128,7 @@ public  async Task <string> SearchStores(string ean, float price)
  //string ean=textBox1.Text;
  //string Message3="";
 
-        string api_key = "l1sb4dr7rnng4ftxp41smz54soubg2";
+        string api_key = "";
             //Define your baseUrl
             
             string baseUrl = "https://api.barcodelookup.com/v3/products?barcode="+ean+"&formatted=y&key="+api_key;
